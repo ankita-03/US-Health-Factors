@@ -101,3 +101,36 @@ if not os.path.exists("data.csv"):
     df["preDeath"] = preDeaths
 
     df.to_csv("data.csv", index=False)
+
+if not os.path.exists("final_data.csv"):
+    df = pd.read_csv("data.csv")
+    below18 = []
+    over65 = []
+    other = []
+    toDrop = []
+    driver = webdriver.Chrome()
+    for x in range(len(df)):
+        driver.get(df["url"].tolist()[x])
+        try:
+            element = WebDriverWait(driver, 3).until((
+                EC.presence_of_element_located((By.XPATH, '(//td[@ng-bind-html="row.county_value"])[2]'))
+            ))
+            temp1 = driver.find_element(By.XPATH, '(//td[@ng-bind-html="row.county_value"])[3]')\
+                .get_attribute("innerHTML")
+            temp2 = driver.find_element(By.XPATH, '(//td[@ng-bind-html="row.county_value"])[4]')\
+                .get_attribute("innerHTML")
+        except:
+            print("error reached")
+            toDrop.append(x)
+
+        below18.append(float(temp1.replace("%", "")))
+        over65.append(float(temp2.replace("%", "")))
+        other.append(100 - below18[-1] - over65[-1])
+
+    df = df.drop(index=toDrop)
+    driver.quit()
+
+    df["<18 %"] = below18
+    df[">65 %"] = over65
+    df["18 - 65 %"] = other
+    df.to_csv("final_data.csv", index=False)
