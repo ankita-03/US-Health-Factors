@@ -134,3 +134,4 @@ if not os.path.exists("final_data.csv"):
     df[">65 %"] = over65
     df["18 - 65 %"] = other
     df.to_csv("final_data.csv", index=False)
+
