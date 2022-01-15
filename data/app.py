@@ -17,7 +17,7 @@ def index():
     listings_data = getJSON(pd.read_csv("final_data.csv"))
     listings.insert_one(listings_data)
     listings = mongo.db.listings.find_one()
-    return render_template("index.states.html", listings=listings)
+    return render_template("index.html", listings=listings)
 
 
 if __name__ == "__main__":
