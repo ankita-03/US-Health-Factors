@@ -1,7 +1,91 @@
 /**
  * read the json file using d3
  */
- let data = d3.json("data/samples.json").then((rawData) => {
+let data = d3.csv("final_data.csv").then((rawData) => {
+    loadStates();
+    loadCounties();
+    /**
+     * reads the data and return the names of all the states alphabetically
+     * @returns array of names of states in the object
+     */
+    function getStates() {
+        let x = [];
+        for (let i = 0; i < rawData.length; i++) {
+            isIn = false;
+            state = rawData[i].state;
+            for (j = 0; j < x.length; j++) {
+                if (x[j] == state) {
+                    isIn = true;
+                };
+            };
+            if (!isIn) {
+                x.push(state);
+            };
+        };
+        return x;
+    };
+
+    /**
+     * 
+     * @param {String with the name of the state to be queried} state 
+     * @returns list of the counties associated with the state
+     */
+    function getCounties(state) {
+        let x = [];
+        for (let i = 0; i < rawData.length; i++) {
+            if (rawData[i].state == state) {
+                x.push(rawData[i].county);
+            };
+        };
+        return x
+    };
+
+    function loadStates() {
+        /**
+         * load in the states dropdowns
+         */
+        states = getStates();
+        for (let i = 0; i < states.length; i++) {
+            let opt = document.createElement('option');
+            opt.value = i;
+            opt.innerHTML = states[i];
+            document.getElementById('selDataset1').appendChild(opt);
+        };
+        for (let i = 0; i < states.length; i++) {
+            let opt = document.createElement('option');
+            opt.value = i;
+            opt.innerHTML = states[i];
+            document.getElementById('selDataset3').appendChild(opt);
+        };
+    };
+
+    function loadCounties(){
+        /**
+         * load in the county drop downs
+         */
+         counties = getCounties(getStates()[document.getElementById('selDataset1').value]).sort();
+         for (let j = 0; j < counties.length; j++) {
+             let opt2 = document.createElement('option');
+             opt2.value = j;
+             opt2.innerHTML = counties[j];
+             document.getElementById('selDataset2').appendChild(opt2);
+         };
+         counties = getCounties(getStates()[document.getElementById('selDataset3').value]).sort();
+         for (let j = 0; j < counties.length; j++) {
+             let opt2 = document.createElement('option');
+             opt2.value = j;
+             opt2.innerHTML = counties[j];
+             document.getElementById('selDataset4').appendChild(opt2);
+         };
+    };
+
+    function clearDropDown(id){
+        var i, L = document.getElementById(id).options.length - 1;
+        for(i = L; i >= 0; i--) {
+            document.getElementById(id).remove(i);
+        }
+    };
+
     /**
      * create var for name and load that data into the <select>
      */
@@ -14,11 +98,23 @@
         };
     };
 
+    document.getElementById('selDataset1').onchange = function optionChanged1(value) {
+        clearDropDown('selDataset2');
+        loadCounties();
+    };
+
+    document.getElementById('selDataset3').onchange = function optionChanged3(value) {
+        clearDropDown('selDataset4');
+        loadCounties();
+    };
+
+
+
     /**
      * initial load ins for the page
      */
-    // load the names into the page.
-    loadNames(rawData.names);
+    // // load the names into the page.
+    // loadNames(rawData.names);
     //load meta-data
     loadMetaData();
     //create the hbar chart
@@ -49,15 +145,22 @@
         /**
          * locate the selected index
         * */
-        let index = document.getElementById('selDataset').value;
-
+        let countyIndex = document.getElementById('selDataset2').value;
+        var index;
+        for(let i = 0; i < rawData.length; i++){
+            if(rawData[i].county == getCounties(getStates()[document.getElementById('selDataset1').value]).sort()[countyIndex]){
+                index = i;
+            }
+        };
         // generate key-value pair from the metadata using the index and add it
         //     to the associated metadata div
-        document.getElementById('sample-metadata').innerHTML = "";
-        for (const [key, value] of Object.entries(rawData.metadata[index])) {
+        document.getElementById('sample-metadata1').innerHTML = "";
+        //state and county pop
+        
+        for (const [key, value] of Object.entries(rawData[index])) {
             let str = document.createElement('h5')
             str.innerHTML = `${key}: ${value}`
-            document.getElementById('sample-metadata').appendChild(str);
+            document.getElementById('sample-metadata1').appendChild(str);
         };
     };
 
