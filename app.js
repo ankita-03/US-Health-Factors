@@ -225,7 +225,7 @@ let data = d3.csv("final_data.csv").then((rawData) => {
     /**
      * create the gauge
      */
-    function createGauge(index) {
+    function createGauge() {
         /**
         * create the gauge
         */
