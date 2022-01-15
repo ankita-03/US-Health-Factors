@@ -57,29 +57,29 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         };
     };
 
-    function loadCounties(){
+    function loadCounties() {
         /**
          * load in the county drop downs
          */
-         counties = getCounties(getStates()[document.getElementById('selDataset1').value]).sort();
-         for (let j = 0; j < counties.length; j++) {
-             let opt2 = document.createElement('option');
-             opt2.value = j;
-             opt2.innerHTML = counties[j];
-             document.getElementById('selDataset2').appendChild(opt2);
-         };
-         counties = getCounties(getStates()[document.getElementById('selDataset3').value]).sort();
-         for (let j = 0; j < counties.length; j++) {
-             let opt2 = document.createElement('option');
-             opt2.value = j;
-             opt2.innerHTML = counties[j];
-             document.getElementById('selDataset4').appendChild(opt2);
-         };
+        counties = getCounties(getStates()[document.getElementById('selDataset1').value]).sort();
+        for (let j = 0; j < counties.length; j++) {
+            let opt2 = document.createElement('option');
+            opt2.value = j;
+            opt2.innerHTML = counties[j];
+            document.getElementById('selDataset2').appendChild(opt2);
+        };
+        counties = getCounties(getStates()[document.getElementById('selDataset3').value]).sort();
+        for (let j = 0; j < counties.length; j++) {
+            let opt2 = document.createElement('option');
+            opt2.value = j;
+            opt2.innerHTML = counties[j];
+            document.getElementById('selDataset4').appendChild(opt2);
+        };
     };
 
-    function clearDropDown(id){
+    function clearDropDown(id) {
         var i, L = document.getElementById(id).options.length - 1;
-        for(i = L; i >= 0; i--) {
+        for (i = L; i >= 0; i--) {
             document.getElementById(id).remove(i);
         }
     };
@@ -116,22 +116,29 @@ let data = d3.csv("final_data.csv").then((rawData) => {
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-    function createBar(index) {
-  
-    let sample = rawData.[index];
-    let xAxis = sample.sample_values;
-    let yAxis = [];
-    let hoverText = sample.otu_labels;
-    for (let i = 0; i < sample.otu_ids.length; i++) {
-        yAxis.push("OTU " + sample.otu_ids[i])
+    function createGuage() {
+        let countyIndex = document.getElementById('selDataset4').value;
+        var index;
+        for (let i = 0; i < rawData.length; i++) {
+            if (rawData[i].county == getCounties(getStates()[document.getElementById('selDataset3').value]).sort()[countyIndex]) {
+                index = i;
+            }
+        };
+        var data = [
+            {
+                domain: { x: [0, 1], y: [0, 1] },
+                value: rawData[index]["pofHealth %"],
+                title: { text: "Poor or Fair Health" },
+                type: "indicator",
+                mode: "gauge+number",
+                delta: { reference: 400 },
+                gauge: { axis: { range: [null, 9] } }
+            }
+        ];
+        var layout = { width: 500 };
+        Plotly.newPlot('gauge', data, layout);
     };
-    //create the horizontal bar chart
-    let hBar = [{
-    type: 'bar',
-    x: xAxis.slice(0, 9).reverse(),
-    y: yAxis.slice(0, 9).reverse(),
-    Plotly.newPlot("bar", hBar, layout);
-    };
+    createGuage();
 
     /**
      * initial load ins for the page
@@ -172,8 +179,8 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         * */
         let countyIndex = document.getElementById('selDataset2').value;
         var index;
-        for(let i = 0; i < rawData.length; i++){
-            if(rawData[i].county == getCounties(getStates()[document.getElementById('selDataset1').value]).sort()[countyIndex]){
+        for (let i = 0; i < rawData.length; i++) {
+            if (rawData[i].county == getCounties(getStates()[document.getElementById('selDataset1').value]).sort()[countyIndex]) {
                 index = i;
             }
         };
@@ -189,7 +196,7 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         let str2 = document.createElement('h5')
         str2.innerHTML = `County Population: ${numberWithCommas(rawData[index].countyPop)}`
         document.getElementById('sample-metadata1').appendChild(str2);
-        
+
     };
     function loadMetaData2() {
         /**
@@ -197,8 +204,8 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         * */
         let countyIndex = document.getElementById('selDataset4').value;
         var index;
-        for(let i = 0; i < rawData.length; i++){
-            if(rawData[i].county == getCounties(getStates()[document.getElementById('selDataset3').value]).sort()[countyIndex]){
+        for (let i = 0; i < rawData.length; i++) {
+            if (rawData[i].county == getCounties(getStates()[document.getElementById('selDataset3').value]).sort()[countyIndex]) {
                 index = i;
             }
         };
@@ -213,9 +220,9 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         let str2 = document.createElement('h5')
         str2.innerHTML = `County Population: ${numberWithCommas(rawData[index].countyPop)}`
         document.getElementById('sample-metadata2').appendChild(str2);
-        
-    };        
-        
+
+    };
+
 
 
 
@@ -224,7 +231,7 @@ let data = d3.csv("final_data.csv").then((rawData) => {
     /**
      * Generate hotizontal bar chart
      */
-    function createBar(index) {
+    function gauge(index) {
         /**
          * find the top ten bacterias in the samples and create the bar chart
          */
