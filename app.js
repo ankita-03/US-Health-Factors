@@ -116,30 +116,22 @@ let data = d3.csv("final_data.csv").then((rawData) => {
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-    // function createBar(index) {
-    //     /**
-    //      * find the top ten bacterias in the samples and create the bar chart
-    //      */
-    //     let sample = rawData.samples[index];
-    //     let xAxis = sample.sample_values;
-    //     let yAxis = [];
-    //     let hoverText = sample.otu_labels;
-    //     for (let i = 0; i < sample.otu_ids.length; i++) {
-    //         yAxis.push("OTU " + sample.otu_ids[i])
-    //     };
-    //     // create the horizontal bar chart
-    //     let hBar = [{
-    //         type: 'bar',
-    //         x: xAxis.slice(0, 9).reverse(),
-    //         y: yAxis.slice(0, 9).reverse(),
-    //         orientation: 'h',
-    //         text: hoverText.slice(0, 9).reverse()
-    //     }];
-    //     let layout = {
-    //         showlegend: false
-    //     };
-    //     Plotly.newPlot("bar", hBar, layout);
-    // };
+    function createBar(index) {
+  
+    let sample = rawData.[index];
+    let xAxis = sample.sample_values;
+    let yAxis = [];
+    let hoverText = sample.otu_labels;
+    for (let i = 0; i < sample.otu_ids.length; i++) {
+        yAxis.push("OTU " + sample.otu_ids[i])
+    };
+    //create the horizontal bar chart
+    let hBar = [{
+    type: 'bar',
+    x: xAxis.slice(0, 9).reverse(),
+    y: yAxis.slice(0, 9).reverse(),
+    Plotly.newPlot("bar", hBar, layout);
+    };
 
     /**
      * initial load ins for the page
