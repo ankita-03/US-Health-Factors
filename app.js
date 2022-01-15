@@ -108,6 +108,9 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         loadCounties();
     };
 
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
 
     /**
@@ -152,16 +155,19 @@ let data = d3.csv("final_data.csv").then((rawData) => {
                 index = i;
             }
         };
+
         // generate key-value pair from the metadata using the index and add it
         //     to the associated metadata div
         document.getElementById('sample-metadata1').innerHTML = "";
+
         //state and county pop
+        let str1 = document.createElement('h5')
+        str1.innerHTML = `State Population: ${numberWithCommas(rawData[index].statePop)}`
+        document.getElementById('sample-metadata1').appendChild(str1);
+        let str2 = document.createElement('h5')
+        str2.innerHTML = `County Population: ${numberWithCommas(rawData[index].countyPop)}`
+        document.getElementById('sample-metadata1').appendChild(str2);
         
-        for (const [key, value] of Object.entries(rawData[index])) {
-            let str = document.createElement('h5')
-            str.innerHTML = `${key}: ${value}`
-            document.getElementById('sample-metadata1').appendChild(str);
-        };
     };
 
     /**
