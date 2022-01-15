@@ -1,6 +1,4 @@
-/**
- * read the json file using d3
- */
+
 let data = d3.csv("final_data.csv").then((rawData) => {
     loadStates();
     loadCounties();
@@ -102,16 +100,46 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         clearDropDown('selDataset2');
         loadCounties();
     };
+    document.getElementById('selDataset2').onchange = function optionChanged2(value) {
+        document.getElementById('sample-metadata1').innerHTML = "";
+        loadMetaData1()
+    };
 
     document.getElementById('selDataset3').onchange = function optionChanged3(value) {
         clearDropDown('selDataset4');
         loadCounties();
     };
-
+    document.getElementById('selDataset4').onchange = function optionChanged4(value) {
+        document.getElementById('sample-metadata2').innerHTML = "";
+        loadMetaData2()
+    };
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-
+    // function createBar(index) {
+    //     /**
+    //      * find the top ten bacterias in the samples and create the bar chart
+    //      */
+    //     let sample = rawData.samples[index];
+    //     let xAxis = sample.sample_values;
+    //     let yAxis = [];
+    //     let hoverText = sample.otu_labels;
+    //     for (let i = 0; i < sample.otu_ids.length; i++) {
+    //         yAxis.push("OTU " + sample.otu_ids[i])
+    //     };
+    //     // create the horizontal bar chart
+    //     let hBar = [{
+    //         type: 'bar',
+    //         x: xAxis.slice(0, 9).reverse(),
+    //         y: yAxis.slice(0, 9).reverse(),
+    //         orientation: 'h',
+    //         text: hoverText.slice(0, 9).reverse()
+    //     }];
+    //     let layout = {
+    //         showlegend: false
+    //     };
+    //     Plotly.newPlot("bar", hBar, layout);
+    // };
 
     /**
      * initial load ins for the page
@@ -119,7 +147,8 @@ let data = d3.csv("final_data.csv").then((rawData) => {
     // // load the names into the page.
     // loadNames(rawData.names);
     //load meta-data
-    loadMetaData();
+    loadMetaData1();
+    loadMetaData2();
     //create the hbar chart
     createBar(document.getElementById('selDataset').value);
     //load bubble chart
@@ -132,7 +161,8 @@ let data = d3.csv("final_data.csv").then((rawData) => {
      */
     document.getElementById('selDataset').onchange = function optionChanged() {
         // re-load the meta-data
-        loadMetaData();
+        loadMetaData1();
+        loadMetaData2();
         // re-load the bar chart
         createBar(document.getElementById('selDataset').value);
         // re-load the bubble chart
@@ -144,7 +174,7 @@ let data = d3.csv("final_data.csv").then((rawData) => {
     /**
      * Update the meta-data
      */
-    function loadMetaData() {
+    function loadMetaData1() {
         /**
          * locate the selected index
         * */
@@ -169,6 +199,35 @@ let data = d3.csv("final_data.csv").then((rawData) => {
         document.getElementById('sample-metadata1').appendChild(str2);
         
     };
+    function loadMetaData2() {
+        /**
+         * locate the selected index
+        * */
+        let countyIndex = document.getElementById('selDataset4').value;
+        var index;
+        for(let i = 0; i < rawData.length; i++){
+            if(rawData[i].county == getCounties(getStates()[document.getElementById('selDataset3').value]).sort()[countyIndex]){
+                index = i;
+            }
+        };
+        // generate key-value pair from the metadata using the index and add it
+        //     to the associated metadata div
+        document.getElementById('sample-metadata2').innerHTML = "";
+
+        //state and county pop
+        let str1 = document.createElement('h5')
+        str1.innerHTML = `State Population: ${numberWithCommas(rawData[index].statePop)}`
+        document.getElementById('sample-metadata2').appendChild(str1);
+        let str2 = document.createElement('h5')
+        str2.innerHTML = `County Population: ${numberWithCommas(rawData[index].countyPop)}`
+        document.getElementById('sample-metadata2').appendChild(str2);
+        
+    };        
+        
+
+
+
+
 
     /**
      * Generate hotizontal bar chart
