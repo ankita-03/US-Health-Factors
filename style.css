@@ -1,0 +1,25 @@
+body {
+  background-image: url('covid19.jpg');
+  background-size: cover;
+}
+
+div {
+  background-color: transparent;
+  color: steelblue;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+p {
+    color:steelblue;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.well {
+  color: steelblue;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h1 {
+  font-size: xxx-large;
+  color: white
+}
