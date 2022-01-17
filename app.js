@@ -135,7 +135,7 @@ let data = d3.csv("final_data.csv").then((rawData) => {
                 gauge: { axis: { range: [null, 9] } }
             }
         ];
-        var layout = { width: 500 };
+        var layout = { width: 605 };
         Plotly.newPlot('gauge', data, layout);
     };
     createGuage();
