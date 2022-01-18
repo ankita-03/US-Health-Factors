@@ -1,5 +1,5 @@
 body {
-  background-image: url('covid19.jpg');
+  background-image: url('usahealth.jpg');
   background-size: cover;
 }
 
@@ -10,16 +10,77 @@ div {
 }
 
 p {
-    color:steelblue;
+    color: black;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .well {
-  color: steelblue;
+  color: black;
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 h1 {
   font-size: xxx-large;
-  color: white
+  color: black
+}
+
+style
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+h2 {
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+p2 {
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.panel-title {
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.panel-body {
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.item1 {
+  color: transparent;
+}
+
+.item2 {
+  color: transparent;
+}
+
+.item3 {
+  color: transparent;
+}
+
+.item4 {
+  color: transparent;
+}
+
+.row {
+  opacity: .95;
 }

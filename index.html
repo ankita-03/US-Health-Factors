@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +9,46 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  </style>
+
 <body>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12 jumbotron text-center">
-        <h1>United States County Health Rating Dashboard</h1>
+      <div class="col-md-12 text-center">
+        <h1>United States Health Rankings Dashboard</h1>
         <p>Use the drop down menus to compare health data from counties located in the US</p>
       </div>
-    </div>background-size: cover;
+      <div class="grid-container">
+        <div class="item1">1</div>
+        <div class="item2">2</div>
+        <div class="item3">3</div>  
+        <div class="item4">4</div>
+    <div row="zoom-in-up"></div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-2"></div>
+      <div class="col-md-4 text-center">
         <div class="well">
           <h5>State/County</h5>
           <select id="selDataset1" onchange="optionChanged1(this.value)"></select>
@@ -30,7 +61,7 @@
           <div id="sample-metadata1" class="panel-body"></div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4 text-center">
         <div class="well">
           <h5>State/County</h5>
           <select id="selDataset3" onchange="optionChanged3(this.value)"></select>
@@ -42,24 +73,60 @@
           </div>
           <div id="sample-metadata2" class="panel-body"></div>
         </div>
-      </div>
-     <div class="col-md-6">
+      </div>   
+      <div class="container">
+        <div class="grid-container">
+          <div class="item1">1</div>
+          <div class="item2">2</div>
+          <div class="item3">3</div>  
+          <div class="item4">4</div>
+        <div class="row align-items-center">
+     <div class="col-sm-6">
         <div id="gauge1"></div>
       </div>
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <div id="gauge2"></div>
       </div>
+      <div class="grid-container">
+        <div class="item1">1</div>
+        <div class="item2">2</div>
+        <div class="item3">3</div>  
+        <div class="item4">4</div>
+    <div class="row">
+      <div class="col-lg-12"></div>
+    </div>
+    <div class="container">
+      <div class="row align-items-center">
+   <div class="col-sm-6">
+      <div id="gauge3"></div>
+    </div>
+    <div class="col-sm-6">
+      <div id="gauge4"></div>
     </div>
   </div>
+      <div class="grid-container">
+        <div class="item1">1</div>
+        <div class="item2">2</div>
+        <div class="item3">3</div>  
+        <div class="item4">4</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+          <h2>Additonal Sources</h2>
+          <p2>Blah blah blah</p2> 
+        </div>
+      </div>
+    </div>     
+  </div>
+
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="app.js"></script>
+ 
+  </body>
+  </html>
 </body>
 </html>
-
-
-
-
 
 
 
